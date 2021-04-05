@@ -1,0 +1,22 @@
+name: Tests Workflow
+
+on: [push]
+
+jobs:
+  build:
+    name: Autograding
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare to tests
+        run: |
+          rm -rf ./__tests__ ./src ./dist ./*.js ./*ts
+          openssl enc -d -aes-256-ecb -in .github/tests.tar.gz -K "${{ secrets.KEY_TESTS }}" -iter 7 | tar -xzf - -C ./
+          npm i
+          npm i jest
+      - name: Tests
+        run: |
+          bash -e ./__tests__/test.sh
+          npx jest ./__tests__/typescript.test.js
+      - uses: education/autograding@v1
+
