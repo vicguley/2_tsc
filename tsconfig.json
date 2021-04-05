@@ -1,7 +1,6 @@
 {
  "compilerOptions": {
-    "outDir": "dist",
-     "outFile": "main.js"
+     "outFile": "dist/main.js"
  },
 "files": [
   "file1.ts",
